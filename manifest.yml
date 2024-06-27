@@ -1,0 +1,21 @@
+modules:
+  jira:globalPage:
+    - key: release-dashboard-hello-world-global-page
+      resource: main
+      resolver:
+        function: resolver
+      render: native
+      title: Release Dashboard
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: src/frontend/index.jsx
+app:
+  runtime:
+    name: nodejs18.x
+  id: ari:cloud:ecosystem::app/cce0cd4c-01cc-40fc-b682-5ddb93748f89
+permissions:
+  scopes:
+    - read:jira-work

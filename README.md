@@ -1,6 +1,6 @@
 # Forge Jira Release Dashboard
 
-This project contains a Forge app written in JavaScript that displays a release dashboard of the current and next releases in a Jira global page. This page 
+This project contains a Forge app written in JavaScript that displays a release dashboard of the current and next releases in a Jira global page. This page pulls which projects to query from a specific filter ID (line 11 of 'src/resolvers/index.js'. This allows non-devs to configure the projects pulled into the dashboard, but you will need to edit the filter ID to meet the needs of your specific Jira instance. 
 
 See [developer.atlassian.com/platform/forge/](https://developer.atlassian.com/platform/forge) for documentation and tutorials explaining Forge.
 

@@ -8,6 +8,10 @@ import api, { route } from '@forge/api';
 
 const App = () => {
 
+  //NOTE: you need to do a one-time replace the filter ID for your specific Jira instance
+  const filterId = 10413 //BP Jira instance
+  //const filterID = 10002 //Ellie's Test Jira instance
+
   const [data, setData] = useState();
 
   const createKey = (input) => {
@@ -18,8 +22,7 @@ const App = () => {
   const getData = async () => {
 
     //get projects from Filter 
-    //NOTE: you need to doe a one-time replace the filter ID for your specific Jira instance
-    const filter = await requestJira(`/rest/api/3/filter/10002`, {
+    const filter = await requestJira(`/rest/api/3/filter/${filterId}`, {
       headers: {
         'Accept': 'application/json'
       }
@@ -118,7 +121,7 @@ const App = () => {
   }, []);
 
   
-  // Config for the "current version" Table 
+  // Configs for the Tables
   
   //headings for the current table
   const headCurrent = {
@@ -148,10 +151,41 @@ const App = () => {
         },
       ],
     };
+
+  //headings for the Next table
+  const headNext = {
+    cells: [
+      {
+        key: "service",
+        content: "Service",
+        isSortable: true,
+      },
+      {
+        key: "version",
+        content: "Next Scheduled Release",
+        shouldTruncate: true,
+        isSortable: true,
+      },
+      {
+        key: "deployDate",
+        content: "Scheduled Deployment Date",
+        shouldTruncate: true,
+        isSortable: true,
+      },
+      {
+        key: "releaseNote",
+        content: "Release Notes",
+        shouldTruncate: true,
+        isSortable: true,
+      },
+    ],
+  };
   
-  // applied as rows in the current table
+
+  // Rows for the tables 
   
   let rowsCurrent = [];
+  let rowsNext = [];
   if (data != null) {
     /*
     rowsCurrent = {
@@ -159,7 +193,7 @@ const App = () => {
       cells: data
     }
       */
-    console.log("print data for rowsCurrent")
+    console.log("print data for rows")
     console.log(data)
 
     rowsCurrent = data.map((d, index) => ({
@@ -179,44 +213,62 @@ const App = () => {
        },
       ],
     }));
-    
-    console.log("rowsCurrent:   " + rowsCurrent)
-    console.log(Object.prototype.toString.call(rowsCurrent))
-    console.log(rowsCurrent)
+
+    rowsNext = data.map((d, index) => ({
+      key: `row-${index}-${d.projectKey}`,
+      cells: [
+        {
+          key: createKey(d.projectKey),
+          content: <Link href="">{d.projectKey}</Link>,
+        },
+        {
+          key: createKey(d.nextVer),
+          content: d.nextVer,
+        },
+        {
+          key: createKey(d.nextDate),
+          content: d.nextDate,
+       },
+      ],
+    }));
 
   }
   else {
-    console.log("data is null - else rowsCurrent")
+    console.log("data is null")
     return (
       <>
-        <Text>Hello world!</Text>
+        <Text>Welcome to the PEC Release Dashboard!</Text>
+
+        <Text>Please wait while the data loads...</Text>
   
-        <DynamicTable
-          head={headCurrent}
-          emptyView="No data to display"
-          //rows={rowsCurrent}
-          rowsPerPage={10}
-          defaultPage={1}
-          loadingSpinnerSize="large"
-          isRankable
-        />
       </>
     );
   }
 
   return (
     <>
-      <Text>Hello world!</Text>
+      <Text>Welcome to the PEC Release Dashboard!</Text>
 
       <DynamicTable
+        caption="Current Production Versions"
 			  head={headCurrent}
-        //emptyView="No data to display"
 			  rows={rowsCurrent}
 			  rowsPerPage={10}
 			  defaultPage={1}
 			  loadingSpinnerSize="large"
 			  isRankable
 		  />
+
+      <DynamicTable
+        caption="Next Scheduled Releases"
+			  head={headNext}
+			  rows={rowsNext}
+			  rowsPerPage={10}
+			  defaultPage={1}
+			  loadingSpinnerSize="large"
+			  isRankable
+		  />
+
     </>
   );
 };

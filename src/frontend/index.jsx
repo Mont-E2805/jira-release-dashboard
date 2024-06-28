@@ -86,7 +86,7 @@ const App = () => {
         //create object for table array 
         const object = {
           projectKey: project,
-          currenVer: currentRelease.name,
+          currentVer: currentRelease.name,
           currentDate: currentRelease.releaseDate,
           nextVer: nextRelease.name,
           nextDate: nextRelease.releaseDate
@@ -159,21 +159,23 @@ const App = () => {
       cells: data
     }
       */
-    
-    rowsCurrent = data.map((index, data) => ({
-      key: `row-${index}-${data.projectKey}`,
+    console.log("print data for rowsCurrent")
+    console.log(data)
+
+    rowsCurrent = data.map((d, index) => ({
+      key: `row-${index}-${d.projectKey}`,
       cells: [
         {
-          key: createKey(data.projectKey),
-          content: <Link href="">{data.projectKey}</Link>,
+          key: createKey(d.projectKey),
+          content: <Link href="">{d.projectKey}</Link>,
         },
         {
-          key: createKey(data.currenVer),
-          content: data.currenVer,
+          key: createKey(d.currentVer),
+          content: d.currentVer,
         },
         {
-          key: createKey(data.currenVerDate),
-          content: data.currenDate,
+          key: createKey(d.currentDate),
+          content: d.currentDate,
        },
       ],
     }));

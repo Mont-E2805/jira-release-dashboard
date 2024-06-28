@@ -1,6 +1,6 @@
 modules:
   jira:globalPage:
-    - key: release-dashboard-hello-world-global-page
+    - key: release-dashboard-global-page
       resource: main
       resolver:
         function: resolver

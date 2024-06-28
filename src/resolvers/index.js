@@ -3,11 +3,11 @@ import api, { route } from '@forge/api';
 
 const resolver = new Resolver();
 
-//get projects
-resolver.define('getReleaseData', async ({context}) => {
-  console.log("enter resolver");
 
-  //get projects
+resolver.define('getReleaseData', async ({ payload, context }) => {
+
+  //get projects from Filter 
+  //NOTE: you need to doe a one-time replace the filter ID for your specific Jira instance
   const filter = await api.asUser().requestJira(route`/rest/api/3/filter/10002`, {
     headers: {
       'Accept': 'application/json'
@@ -93,6 +93,7 @@ resolver.define('getReleaseData', async ({context}) => {
   }
 
   console.log("FINAL table Data Print")
+  console.log(Object.prototype.toString.call(tableData))
   console.log(tableData)
 
   return tableData;

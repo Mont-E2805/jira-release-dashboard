@@ -91,9 +91,10 @@ const App = () => {
           projectKey: project,
           currentVer: currentRelease.name,
           currentDate: currentRelease.releaseDate,
+          currentDesc: currentRelease.description,
           nextVer: nextRelease.name,
-          nextDate: nextRelease.releaseDate
-          //TODO: add release notes
+          nextDate: nextRelease.releaseDate,
+          nextDesc: nextRelease.description
         }
   
         //add to table data array 
@@ -144,8 +145,8 @@ const App = () => {
           isSortable: true,
         },
         {
-          key: "releaseNote",
-          content: "Release Notes",
+          key: "description",
+          content: "Release Description",
           shouldTruncate: true,
           isSortable: true,
         },
@@ -173,8 +174,8 @@ const App = () => {
         isSortable: true,
       },
       {
-        key: "releaseNote",
-        content: "Release Notes",
+        key: "description",
+        content: "Release Description",
         shouldTruncate: true,
         isSortable: true,
       },
@@ -201,7 +202,7 @@ const App = () => {
       cells: [
         {
           key: createKey(d.projectKey),
-          content: <Link href="">{d.projectKey}</Link>,
+          content: <Link href={'/projects/' + d.projectKey + '?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page'}>{d.projectKey}</Link>,
         },
         {
           key: createKey(d.currentVer),
@@ -210,7 +211,11 @@ const App = () => {
         {
           key: createKey(d.currentDate),
           content: d.currentDate,
-       },
+        },
+        {
+          key: createKey(d.currentDesc),
+          content: d.currentDesc,
+        },
       ],
     }));
 
@@ -219,7 +224,7 @@ const App = () => {
       cells: [
         {
           key: createKey(d.projectKey),
-          content: <Link href="">{d.projectKey}</Link>,
+          content: <Link href={'/projects/' + d.projectKey + '?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page'}>{d.projectKey}</Link>,
         },
         {
           key: createKey(d.nextVer),
@@ -228,7 +233,11 @@ const App = () => {
         {
           key: createKey(d.nextDate),
           content: d.nextDate,
-       },
+        },
+        {
+          key: createKey(d.nextDesc),
+          content: d.nextDesc,
+        },
       ],
     }));
 
